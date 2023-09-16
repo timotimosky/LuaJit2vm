@@ -32,7 +32,6 @@ public class UnityEngine_ShaderWrap
 		L.RegFunction("GetGlobalFloatArray", GetGlobalFloatArray);
 		L.RegFunction("GetGlobalVectorArray", GetGlobalVectorArray);
 		L.RegFunction("GetGlobalMatrixArray", GetGlobalMatrixArray);
-		L.RegFunction("New", _CreateUnityEngine_Shader);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("isSupported", get_isSupported, null);
@@ -43,29 +42,6 @@ public class UnityEngine_ShaderWrap
 		L.EndClass();
 	}
 
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int _CreateUnityEngine_Shader(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 0)
-			{
-				UnityEngine.Shader obj = new UnityEngine.Shader();
-				ToLua.PushSealed(L, obj);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: UnityEngine.Shader.New");
-			}
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int Find(IntPtr L)

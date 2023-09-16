@@ -43,11 +43,7 @@ public class TestUTF8 : LuaClient
 
     protected override void OnLoadFinished()
     {
-#if UNITY_5 || UNITY_2017 || UNITY_2018
         Application.logMessageReceived += ShowTips;
-#else
-        Application.RegisterLogCallback(ShowTips);
-#endif  
         base.OnLoadFinished();
         luaState.DoString(script);
         LuaFunction func = luaState.GetFunction("Test");
@@ -68,11 +64,7 @@ public class TestUTF8 : LuaClient
     {
         base.OnApplicationQuit();
 
-#if UNITY_5 || UNITY_2017 || UNITY_2018
         Application.logMessageReceived -= ShowTips;
-#else
-        Application.RegisterLogCallback(null);
-#endif
     }
 
     void OnGUI()

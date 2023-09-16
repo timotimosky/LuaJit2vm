@@ -51,7 +51,7 @@ public class ScriptsFromFile : MonoBehaviour
     {
         lua.Dispose();
         lua = null;
-#if UNITY_5 || UNITY_2017 || UNITY_2018	
+#if UNITY_2023
         Application.logMessageReceived -= Log;
 #else
         Application.RegisterLogCallback(null);

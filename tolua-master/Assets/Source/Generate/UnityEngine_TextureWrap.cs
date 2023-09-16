@@ -9,7 +9,6 @@ public class UnityEngine_TextureWrap
 		L.BeginClass(typeof(UnityEngine.Texture), typeof(UnityEngine.Object));
 		L.RegFunction("SetGlobalAnisotropicFilteringLimits", SetGlobalAnisotropicFilteringLimits);
 		L.RegFunction("GetNativeTexturePtr", GetNativeTexturePtr);
-		L.RegFunction("New", _CreateUnityEngine_Texture);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("masterTextureLimit", get_masterTextureLimit, set_masterTextureLimit);
@@ -28,29 +27,6 @@ public class UnityEngine_TextureWrap
 		L.EndClass();
 	}
 
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int _CreateUnityEngine_Texture(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 0)
-			{
-				UnityEngine.Texture obj = new UnityEngine.Texture();
-				ToLua.Push(L, obj);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: UnityEngine.Texture.New");
-			}
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int SetGlobalAnisotropicFilteringLimits(IntPtr L)

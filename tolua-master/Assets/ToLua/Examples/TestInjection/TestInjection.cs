@@ -22,11 +22,7 @@ public class TestInjection : MonoBehaviour
     void Start()
     {
         InitGUI();
-#if UNITY_5 || UNITY_2017
         Application.logMessageReceived += ShowTips;
-#else
-        Application.RegisterLogCallback(ShowTips);
-#endif
         new LuaResLoader();
         luaState = new LuaState();
         luaState.Start();
@@ -115,11 +111,7 @@ public class TestInjection : MonoBehaviour
 
     void OnApplicationQuit()
     {
-#if UNITY_5 || UNITY_2017
         Application.logMessageReceived -= ShowTips;
-#else
-        Application.RegisterLogCallback(null);
-#endif
         luaState.Dispose();
         luaState = null;
     }

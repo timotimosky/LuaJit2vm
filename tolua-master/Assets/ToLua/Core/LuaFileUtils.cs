@@ -245,20 +245,15 @@ namespace LuaInterface
                     fileName += ".lua";
                 }
 
-#if UNITY_5 || UNITY_2017
+
                 fileName += ".bytes";
-#endif
                 zipName = sb.ToString();
                 zipMap.TryGetValue(zipName, out zipFile);
             }            
 
             if (zipFile != null)
             {
-#if UNITY_5 || UNITY_2017
                 TextAsset luaCode = zipFile.LoadAsset<TextAsset>(fileName);
-#else
-                TextAsset luaCode = zipFile.Load(fileName, typeof(TextAsset)) as TextAsset;
-#endif
 
                 if (luaCode != null)
                 {

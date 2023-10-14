@@ -110,16 +110,15 @@ namespace LuaInterface
 
             float time = Time.realtimeSinceStartup;
             InitTypeTraits();
-
             InitStackTraits();
             L = LuaNewState();            
             LuaException.Init(L);
             stateMap.Add(L, this);                        
             OpenToLuaLibs();            
-           // ToLua.OpenLibs(L);
+            ToLua.OpenLibs(L);
             OpenBaseLibs();
             LuaSetTop(0);
-           // InitLuaPath();
+            InitLuaPath();
             Debugger.Log("Init lua state cost: {0}", Time.realtimeSinceStartup - time);
         }        
 
@@ -1739,6 +1738,11 @@ namespace LuaInterface
             return 0;
         }
 
+        public void StepCollect()
+        {
+            translator.StepCollect();
+        }
+
         public void RefreshDelegateMap()
         {
             List<long> list = new List<long>();
@@ -2020,6 +2024,7 @@ namespace LuaInterface
             if (injectionState == this)
             {
                 injectionState = null;
+                LuaInjectionStation.Clear();
             }
 
 #if UNITY_EDITOR

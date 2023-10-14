@@ -12,10 +12,12 @@ public class ScriptsFromFile : MonoBehaviour
 
 	void Start () 
     {
-
+#if UNITY_5 || UNITY_2017 || UNITY_2018		
         Application.logMessageReceived += Log;
-       
-        lua = new LuaState();               
+#else
+        Application.RegisterLogCallback(Log);
+#endif         
+        lua = new LuaState();                
         lua.Start();        
         //如果移动了ToLua目录，自己手动修复吧，只是例子就不做配置了
         string fullPath = Application.dataPath + "\\ToLua/Examples/02_ScriptsFromFile";
@@ -51,7 +53,7 @@ public class ScriptsFromFile : MonoBehaviour
     {
         lua.Dispose();
         lua = null;
-#if UNITY_2023
+#if UNITY_5 || UNITY_2017 || UNITY_2018	
         Application.logMessageReceived -= Log;
 #else
         Application.RegisterLogCallback(null);

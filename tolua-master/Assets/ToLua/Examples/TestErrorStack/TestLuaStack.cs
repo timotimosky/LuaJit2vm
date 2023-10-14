@@ -283,8 +283,11 @@ public class TestLuaStack : MonoBehaviour
 
     void Awake()
     {
-
+#if UNITY_5 || UNITY_2017 || UNITY_2018	
         Application.logMessageReceived += ShowTips;
+#else
+        Application.RegisterLogCallback(ShowTips);
+#endif
         Instance = this;
         new LuaResLoader();
         testGo = gameObject;                
@@ -329,7 +332,11 @@ public class TestLuaStack : MonoBehaviour
 
     void OnApplicationQuit()
     {
+#if UNITY_5 || UNITY_2017 || UNITY_2018
         Application.logMessageReceived -= ShowTips;
+#else
+        Application.RegisterLogCallback(null);
+#endif
         state.Dispose();
         state = null;
     }

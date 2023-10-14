@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if ENABLE_LUA_INJECTION
+using System;
 using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -103,20 +104,12 @@ public static class ToLuaInjectionHelper
             }
 
             var baseTypeDef = baseType.Resolve();
-            baseMethodDef = baseTypeDef.Methods.FirstOrDefault(method =>
-            {
-                return method.Name == target.Name
-                    && target.Parameters
-                        .Select(param => param.ParameterType.FullName)
-                        .SequenceEqual(method.Parameters.Select(param => param.ParameterType.FullName))
-                    && method.ReturnType.FullName == target.ReturnType.FullName;
-            });
-
+            baseMethodDef = MetadataResolver.GetMethod(baseTypeDef.Methods, target);
             if (baseMethodDef != null && !baseMethodDef.IsAbstract)
             {
                 if (baseType.IsGenericInstance)
                 {
-                    MethodReference baseMethodRef = baseTypeDef.Module.Import(baseMethodDef);
+                    MethodReference baseMethodRef = baseType.Module.Import(baseMethodDef);
                     var baseTypeInstance = (GenericInstanceType)baseType;
                     return baseMethodRef.MakeGenericMethod(baseTypeInstance.GenericArguments.ToArray());
                 }
@@ -166,7 +159,11 @@ public static class ToLuaInjectionHelper
 
     public static bool IsGenericMethodDefinition(this MethodDefinition md)
     {
-        if (md.HasGenericParameters || md.ContainsGenericParameter)
+        if (md.HasGenericParameters
+#if UNITY_5_2 || UNITY_5_3 || UNITY_5_3_OR_NEWER
+            || md.ContainsGenericParameter
+#endif
+            )
         {
             return true;
         }
@@ -386,3 +383,4 @@ public static class ToLuaInjectionHelper
         }
     }
 }
+#endif

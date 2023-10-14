@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using LuaInterface;
 using System;
+using Debugger = LuaInterface.Debugger;
 
 namespace LuaInterface
 {
@@ -113,7 +114,7 @@ public class PassStruct : LuaClient
     new void OnApplicationQuit()
     {
         base.OnApplicationQuit();
-#if UNITY_2023
+#if UNITY_5 || UNITY_2017 || UNITY_2018
         Application.logMessageReceived -= ShowTips;
 #else
         Application.RegisterLogCallback(null);
@@ -122,7 +123,7 @@ public class PassStruct : LuaClient
 
     new void Awake()
     {
-#if UNITY_2023
+#if UNITY_5 || UNITY_2017 || UNITY_2018
         Application.logMessageReceived += ShowTips;
 #else
         Application.RegisterLogCallback(ShowTips);
@@ -152,8 +153,8 @@ public class PassStruct : LuaClient
         func.PCall();
         Rect rt = func.CheckValue<Rect>();
         func.EndPCall();
-        Debug.Log(rt);
-        Debug.Log(Vector3.one.ToString());
+        Debugger.Log(rt);
+        Debugger.Log(Vector3.one.ToString());
     }
 
     LuaFunction NewRect = null;

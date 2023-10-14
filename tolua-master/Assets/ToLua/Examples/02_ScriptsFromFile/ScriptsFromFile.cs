@@ -5,18 +5,14 @@ using System;
 using System.IO;
 
 //展示searchpath 使用，require 与 dofile 区别
-public class ScriptsFromFile : MonoBehaviour 
+public class ScriptsFromFile: MonoBehaviour 
 {
     LuaState lua = null;
     private string strLog = "";    
 
 	void Start () 
     {
-#if UNITY_5 || UNITY_2017 || UNITY_2018		
-        Application.logMessageReceived += Log;
-#else
-        Application.RegisterLogCallback(Log);
-#endif         
+        Application.logMessageReceived += Log;      
         lua = new LuaState();                
         lua.Start();        
         //如果移动了ToLua目录，自己手动修复吧，只是例子就不做配置了
@@ -53,10 +49,6 @@ public class ScriptsFromFile : MonoBehaviour
     {
         lua.Dispose();
         lua = null;
-#if UNITY_5 || UNITY_2017 || UNITY_2018	
         Application.logMessageReceived -= Log;
-#else
-        Application.RegisterLogCallback(null);
-#endif 
     }
 }

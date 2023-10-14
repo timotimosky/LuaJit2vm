@@ -6,14 +6,9 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
-public class LuaVMState : MonoBehaviour
+public class LuaVMState
 {
     System.IntPtr L;
-
-    void Start()
-    {
-
-    }
 
     public void InitLuaState()
     {
@@ -21,6 +16,9 @@ public class LuaVMState : MonoBehaviour
         L = LuaVMAPI.luaL_newstate();
         //2载入库  
         LuaVMAPI.luaL_openlibs(L);
+
+        //跟tolua一样注册一个debug函数，将lua的debug信息输出到Unity
+        LuaVMAPI.pushcfunction(L, ToLua.Print);
     }
 
 
@@ -92,7 +90,7 @@ public class LuaVMState : MonoBehaviour
     }
     protected void LuaLoadBuffer(byte[] buffer, string chunkName)
     {
-        // LuaDLL.tolua_pushtraceback(L);
+        LuaDLL.tolua_pushtraceback(L);
         int oldTop = LuaGetTop();
 
         if (LuaLoadBuffer(buffer, buffer.Length, chunkName) == 0)
@@ -106,7 +104,7 @@ public class LuaVMState : MonoBehaviour
 
         string err = LuaVMAPI.lua_tostring(L, -1);
         LuaSetTop(oldTop - 1);
-        // throw new LuaException(err, LuaException.GetLastError());
+        throw new LuaException(err, LuaException.GetLastError());
     }
 
     public int LuaLoadBuffer(byte[] buff, int size, string name)

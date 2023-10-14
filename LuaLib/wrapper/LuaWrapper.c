@@ -35,6 +35,33 @@ LUA_API int luavm_pcall(lua_State* L, int nargs, int nresults, int errfunc)
     return 	lua_pcallk(L, (nargs), (nresults), (errfunc), 0, NULL);
 }
 
+//复制了tolua的实现
+static int tolua_closure(lua_State* L)
+{
+    lua_CFunction fn = (lua_CFunction)lua_tocfunction(L, lua_upvalueindex(2));
+    int r = fn(L);
+
+    if (lua_toboolean(L, lua_upvalueindex(1)))
+    {
+        lua_pushboolean(L, 0);
+        lua_replace(L, lua_upvalueindex(1));
+        return lua_error(L);
+    }
+
+    return r;
+}
+
+//hack for luac, 避免luac error破坏包裹c#函数的异常块(luajit采用的是类似c++异常)
+LUA_API int luavm_pushcfunction(lua_State* L, lua_CFunction fn)
+{
+    lua_pushboolean(L, 0);
+    lua_pushcfunction(L, fn);
+    lua_pushcclosure(L, tolua_closure, 2);
+    return 0;
+}
+
+
+
 int luaVM_dostring(lua_State* L, int index, int* len)
 {
     size_t sz;

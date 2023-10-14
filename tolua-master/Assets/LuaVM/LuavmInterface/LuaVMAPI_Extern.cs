@@ -24,6 +24,9 @@ namespace LuaInterface
         [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern int luavm_loadbuffer(IntPtr luaState, byte[] buff, int size, string name);
 
+        [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int luavm_pushcfunction(IntPtr luaState, IntPtr fn);
+
         public static void DoString(IntPtr L, string chunk)
         {
             byte[] buffer = Encoding.UTF8.GetBytes(chunk);
@@ -39,6 +42,24 @@ namespace LuaInterface
 
           //  lua_ptrtostring(init, chunkName);
         }
+
+
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_WSA_10_0
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int LuaCSFunction(IntPtr luaState);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void LuaHookFunc(IntPtr L, ref Lua_Debug ar);
+#else
+    public delegate int LuaCSFunction(IntPtr luaState);    
+    public delegate void LuaHookFunc(IntPtr L, ref Lua_Debug ar);    
+#endif
+
+        public static void pushcfunction(IntPtr luaState, LuaCSFunction func)
+        {
+            IntPtr fn = Marshal.GetFunctionPointerForDelegate(func);
+            luavm_pushcfunction(luaState, fn);
+        }
+
 
         //真正给外部调用的
         public static bool luaVM_dostring(IntPtr luaState, string chunk)

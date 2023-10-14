@@ -3,7 +3,7 @@ LuaJit 替換為luavm
 
 步骤：
 
-1.替换tolua虚拟机为lua5.1
+1.替换tolua虚拟机为lua5.3
 
 2.修改部分tolua不兼容代码
 

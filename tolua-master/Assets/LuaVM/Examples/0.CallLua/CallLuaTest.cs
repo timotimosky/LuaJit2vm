@@ -18,7 +18,7 @@ public class CallLuaTest : MonoBehaviour
 
         string luafile =
           @"  
-            version = 'luavm 5.4'
+            version = 'luavm 5.4.6'
             function luaFunc()                   
                  return a,b,c,d
             end

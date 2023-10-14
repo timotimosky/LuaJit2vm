@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace LuaInterface
 { 
-    // only for lapi.c
+    // only for lapi.h
     public partial class LuaVMAPI
     {
 #if !UNITY_EDITOR && UNITY_IPHONE

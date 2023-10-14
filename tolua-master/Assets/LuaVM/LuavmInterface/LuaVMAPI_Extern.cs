@@ -54,7 +54,7 @@ namespace LuaInterface
             //return lua_pcall(luaState, 0, LUA_MULTRET, 0) == 0;
         }
 
-        //真正给外部调用的
+        //真正给外部调用的 [1-n]
         public static string lua_tostring(IntPtr luaState, int index)
         {
             int len = 0;
@@ -104,7 +104,7 @@ namespace LuaInterface
                 //将程序块从栈中弹出，并在保护模式下运行该程序块。执行成功返回0，否则将错误信息压入栈中。
                 //为什么成功了，还要栈顶-1?
 
-                if (LuaVMAPI.lua_pcallk(L, 0, LuaDLL.LUA_MULTRET, oldTop) == 0)
+                if (LuaVMAPI.luavm_pcall(L, 0, LuaDLL.LUA_MULTRET, oldTop) == 0)
                 {
                     //恢复栈顶，因为
                     LuaVMAPI.lua_settop(L, oldTop - 1);

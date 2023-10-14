@@ -14,7 +14,10 @@ local socket = require("socket")
 
 socket.url = {}
 local _M = socket.url
-
+version = 'luavm 5.4.6'
+function luaFunc()                   
+     return 3
+end
 -----------------------------------------------------------------------------
 -- Module version
 -----------------------------------------------------------------------------

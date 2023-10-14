@@ -414,12 +414,7 @@ namespace LuaInterface
         */
 
         [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int lua_pcallk(IntPtr L, int nargs, int nresults, long ctx, lua_KFunction k);
-
-        public static int lua_pcallk(IntPtr L, int nargs, int nresults, long ctx)
-        {
-           return lua_pcallk( L,  nargs,  nresults,  ctx, null);
-        }
+        public static extern int luavm_pcall(IntPtr L, int nargs, int nresults, int ctx);
 
 
         public delegate string lua_Reader(IntPtr L, IntPtr status, out uint ctx);

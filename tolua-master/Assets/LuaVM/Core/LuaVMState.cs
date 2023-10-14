@@ -144,7 +144,7 @@ public class LuaVMState : MonoBehaviour
 
     public int LuaPCall(int nArgs, int nResults, int errfunc)
     {
-        return LuaVMAPI.lua_pcallk(L, nArgs, nResults, errfunc);
+        return LuaVMAPI.luavm_pcall(L, nArgs, nResults, errfunc);
     }
 
     public void Dispose()

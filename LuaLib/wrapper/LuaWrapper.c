@@ -30,6 +30,10 @@ LUA_API int luavm_tostring(lua_State* L, const char* o)
     return 	(luaL_loadstring(L, o) || lua_pcall(L, 0, LUA_MULTRET, 0));
 }
 
+LUA_API int luavm_pcall(lua_State* L, int nargs, int nresults, int errfunc)
+{
+    return 	lua_pcallk(L, (nargs), (nresults), (errfunc), 0, NULL);
+}
 
 int luaVM_dostring(lua_State* L, int index, int* len)
 {

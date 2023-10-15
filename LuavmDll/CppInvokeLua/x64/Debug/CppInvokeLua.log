@@ -1,0 +1,4 @@
+﻿  CppInvokeLua.cpp
+D:\github\LuaJit2vm\LuaLib\wrapper\LuaWrapper.h(51,1): warning C4005: “LUA_API”: 宏重定义
+D:\github\LuaJit2vm\LuaLib\src\luaconf.h(285,1): message : 参见“LUA_API”的前一个定义
+  CppInvokeLua.vcxproj -> D:\github\LuaJit2vm\LuavmDll\CppInvokeLua\x64\Debug\CppInvokeLua.exe

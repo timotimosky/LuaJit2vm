@@ -32,7 +32,6 @@ using System.Text;
 using System.IO;
 using System.Diagnostics;
 using LuaInterface;
-
 using Object = UnityEngine.Object;
 using Debug = UnityEngine.Debug;
 using Debugger = LuaInterface.Debugger;
@@ -45,13 +44,7 @@ public static class ToLuaMenu
     public static List<Type> dropType = new List<Type>
     {
         typeof(ValueType),                                  //不需要
-#if UNITY_4_6 || UNITY_4_7
-        typeof(Motion),                                     //很多平台只是空类
-#endif
-
-#if UNITY_5_3_OR_NEWER
         typeof(UnityEngine.CustomYieldInstruction),
-#endif
         typeof(UnityEngine.YieldInstruction),               //无需导出的类      
         typeof(UnityEngine.WaitForEndOfFrame),              //内部支持
         typeof(UnityEngine.WaitForFixedUpdate),
@@ -110,15 +103,15 @@ public static class ToLuaMenu
 
         if (files.Length < 3 && beCheck)
         {
-            if (EditorUtility.DisplayDialog("自动生成", "点击确定自动生成常用类型注册文件， 也可通过菜单逐步完成此功能", "确定", "取消"))
-            {
-                beAutoGen = true;
-                GenLuaDelegates();
-                AssetDatabase.Refresh();
-                GenerateClassWraps();
-                GenLuaBinder();
-                beAutoGen = false;                
-            }
+            //if (EditorUtility.DisplayDialog("自动生成", "点击确定自动生成常用类型注册文件， 也可通过菜单逐步完成此功能", "确定", "取消"))
+            //{
+            //    beAutoGen = true;
+            //    GenLuaDelegates();
+            //    AssetDatabase.Refresh();
+            //    GenerateClassWraps();
+            //    GenLuaBinder();
+            //    beAutoGen = false;                
+            //}
 
             beCheck = false;
         }
@@ -798,24 +791,6 @@ public static class ToLuaMenu
         string bundleName = subDir == null ? "lua.unity3d" : "lua" + subDir.Replace('/', '_') + ".unity3d";
         bundleName = bundleName.ToLower();
 
-#if UNITY_4_6 || UNITY_4_7
-        List<Object> list = new List<Object>();
-
-        for (int i = 0; i < files.Length; i++)
-        {
-            Object obj = AssetDatabase.LoadMainAssetAtPath(files[i]);
-            list.Add(obj);
-        }
-
-        BuildAssetBundleOptions options = BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets | BuildAssetBundleOptions.DeterministicAssetBundle;
-
-        if (files.Length > 0)
-        {
-            string output = string.Format("{0}/{1}/" + bundleName, Application.streamingAssetsPath, GetOS());
-            File.Delete(output);
-            BuildPipeline.BuildAssetBundle(null, list.ToArray(), output, options, EditorUserBuildSettings.activeBuildTarget);            
-        }
-#else
         for (int i = 0; i < files.Length; i++)
         {
             AssetImporter importer = AssetImporter.GetAtPath(files[i]);
@@ -826,7 +801,6 @@ public static class ToLuaMenu
                 importer.assetBundleVariant = null;
             }
         }
-#endif
     }
 
     static void ClearAllLuaFiles()
@@ -1041,12 +1015,8 @@ public static class ToLuaMenu
             {
                 File.Copy(path + "/Luajit64/Build.bat", tempDir + "/Build.bat", true);
             }
-        }
-#if UNITY_5_3_OR_NEWER        
-        else if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS)
-#else
-        else if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iPhone)
-#endif        
+        }     
+        else if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS)      
         {
             //Debug.Log("iOS默认用64位，32位自行考虑");
             File.Copy(path + "/Luajit64/Build.bat", tempDir + "/Build.bat", true);
@@ -1116,16 +1086,12 @@ public static class ToLuaMenu
         ClearAllLuaFiles();
         CreateStreamDir(GetOS());
 
-#if UNITY_4_6 || UNITY_4_7
-        string tempDir = CreateStreamDir("Lua");
-#else
         string tempDir = Application.dataPath + "/temp/Lua";
 
         if (!File.Exists(tempDir))
         {
             Directory.CreateDirectory(tempDir);
         }        
-#endif
         CopyLuaBytesFiles(LuaConst.luaDir, tempDir);
         CopyLuaBytesFiles(LuaConst.toluaDir, tempDir);
 
@@ -1133,7 +1099,6 @@ public static class ToLuaMenu
         List<string> dirs = new List<string>();
         GetAllDirs(tempDir, dirs);
 
-#if UNITY_5 || UNITY_5_3_OR_NEWER
 		for (int i = 0; i < dirs.Count; i++)
         {
             string str = dirs[i].Remove(0, tempDir.Length);
@@ -1147,16 +1112,6 @@ public static class ToLuaMenu
         BuildPipeline.BuildAssetBundles(output, BuildAssetBundleOptions.DeterministicAssetBundle, EditorUserBuildSettings.activeBuildTarget);
 
         //Directory.Delete(Application.dataPath + "/temp/", true);
-#else
-        for (int i = 0; i < dirs.Count; i++)
-        {
-            string str = dirs[i].Remove(0, tempDir.Length);
-            BuildLuaBundle(str.Replace('\\', '/'), "Assets/StreamingAssets/Lua");
-        }
-
-        BuildLuaBundle(null, "Assets/StreamingAssets/Lua");
-        Directory.Delete(Application.streamingAssetsPath + "/Lua/", true);
-#endif
         AssetDatabase.Refresh();
     }
 
@@ -1166,16 +1121,12 @@ public static class ToLuaMenu
         ClearAllLuaFiles();                
         CreateStreamDir(GetOS());
 
-#if UNITY_4_6 || UNITY_4_7
-        string tempDir = CreateStreamDir("Lua");
-#else
         string tempDir = Application.dataPath + "/temp/Lua";
 
         if (!File.Exists(tempDir))
         {
             Directory.CreateDirectory(tempDir);
         }
-#endif
 
         string path = Application.dataPath.Replace('\\', '/');
         path = path.Substring(0, path.LastIndexOf('/'));        
@@ -1191,7 +1142,6 @@ public static class ToLuaMenu
         List<string> dirs = new List<string>();        
         GetAllDirs(sourceDir, dirs);
 
-#if UNITY_5 || UNITY_5_3_OR_NEWER
 		for (int i = 0; i < dirs.Count; i++)
         {
             string str = dirs[i].Remove(0, sourceDir.Length);
@@ -1204,16 +1154,6 @@ public static class ToLuaMenu
         string output = string.Format("{0}/{1}", Application.streamingAssetsPath, GetOS());
         BuildPipeline.BuildAssetBundles(output, BuildAssetBundleOptions.DeterministicAssetBundle, EditorUserBuildSettings.activeBuildTarget);
         Directory.Delete(Application.dataPath + "/temp/", true);
-#else
-        for (int i = 0; i < dirs.Count; i++)
-        {
-            string str = dirs[i].Remove(0, sourceDir.Length);
-            BuildLuaBundle(str.Replace('\\', '/'), "Assets/StreamingAssets/Lua/Out");
-        }
-
-        BuildLuaBundle(null, "Assets/StreamingAssets/Lua/Out/");
-        Directory.Delete(tempDir, true);
-#endif
         AssetDatabase.Refresh();
     }
 
@@ -1355,31 +1295,14 @@ public static class ToLuaMenu
         {
             directory = appPath.Substring(0, appPath.IndexOf("MacOS")) + "Managed/";
         }
-        string suitedMonoCecilPath = directory +
-#if UNITY_2017_1_OR_NEWER
-            "Unity.Cecil.dll";
-#else
-            "Mono.Cecil.dll";
-#endif
-        string suitedMonoCecilMdbPath = directory +
-#if UNITY_2017_1_OR_NEWER
-            "Unity.Cecil.Mdb.dll";
-#else
-            "Mono.Cecil.Mdb.dll";
-#endif
-        string suitedMonoCecilPdbPath = directory +
-#if UNITY_2017_1_OR_NEWER
-            "Unity.Cecil.Pdb.dll";
-#else
-            "Mono.Cecil.Pdb.dll";
-#endif
+        string suitedMonoCecilPath = directory + "Unity.Cecil.dll";
+        string suitedMonoCecilMdbPath = directory +  "Unity.Cecil.Mdb.dll";
+        string suitedMonoCecilPdbPath = directory +  "Unity.Cecil.Pdb.dll";
         string suitedMonoCecilToolPath = directory + "Unity.CecilTools.dll";
 
         if (!File.Exists(suitedMonoCecilPath)
-#if UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_3_OR_NEWER
             && !File.Exists(suitedMonoCecilMdbPath)
             && !File.Exists(suitedMonoCecilPdbPath)
-#endif
         )
         {
             EnableSymbols = false;
@@ -1397,10 +1320,8 @@ public static class ToLuaMenu
         try
         {
             bInjectionToolUpdated = TryUpdate(suitedMonoCecilPath, existMonoCecilPath) ? true : bInjectionToolUpdated;
-#if UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_3_OR_NEWER
             bInjectionToolUpdated = TryUpdate(suitedMonoCecilPdbPath, existMonoCecilPdbPath) ? true : bInjectionToolUpdated;
             bInjectionToolUpdated = TryUpdate(suitedMonoCecilMdbPath, existMonoCecilMdbPath) ? true : bInjectionToolUpdated;
-#endif
             TryUpdate(suitedMonoCecilToolPath, existMonoCecilToolPath);
         }
         catch (Exception e)

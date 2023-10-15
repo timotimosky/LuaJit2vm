@@ -39,7 +39,7 @@ public class LoadLuaFile : MonoBehaviour
         else if (GUI.Button(new Rect(50, 150, 120, 45), "Require"))
         {
             strLog = "";
-            //lua.Require("ScriptsFromFile");
+            lua.Require("ScriptsFromFile");
         }
 
         //lua.Collect();

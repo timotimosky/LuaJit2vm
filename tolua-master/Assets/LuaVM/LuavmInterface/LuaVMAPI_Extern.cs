@@ -27,6 +27,9 @@ namespace LuaInterface
         [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern int luavm_pushcfunction(IntPtr luaState, IntPtr fn);
 
+        [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int luavm_require(IntPtr L, string fileName);
+
         public static void DoString(IntPtr L, string chunk)
         {
             byte[] buffer = Encoding.UTF8.GetBytes(chunk);

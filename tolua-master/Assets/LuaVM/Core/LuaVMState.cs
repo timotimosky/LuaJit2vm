@@ -22,6 +22,36 @@ public class LuaVMState
     }
 
 
+    //注意fileName与lua文件中require一致。
+    public void Require(string fileName)
+    {
+        int top = LuaGetTop();
+        int ret = LuaRequire(fileName);
+
+        if (ret != 0)
+        {
+            string err = LuaToString(-1);
+            LuaSetTop(top);
+            throw new LuaException(err, LuaException.GetLastError());
+        }
+
+        LuaSetTop(top);
+    }
+
+    public int LuaRequire(string fileName)
+    {
+#if UNITY_EDITOR
+        string str = Path.GetExtension(fileName);
+
+        if (str == ".lua")
+        {
+            throw new LuaException("Require not need file extension: " + str);
+        }
+#endif
+        return LuaVMAPI.luavm_require(L, fileName);
+    }
+
+
     public void DoFile(string fileName)
     {
         byte[] buffer = LoadFileBuffer(fileName);

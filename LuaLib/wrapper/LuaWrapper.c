@@ -51,6 +51,18 @@ static int tolua_closure(lua_State* L)
     return r;
 }
 
+LUALIB_API int luavm_require(lua_State* L, const char* fileName)
+{
+    int top = lua_gettop(L);
+    lua_getref(L, LUA_RIDX_CUSTOMTRACEBACK);
+    lua_getref(L, LUA_RIDX_REQUIRE);
+    lua_pushstring(L, fileName);
+    int ret = lua_pcall(L, 1, -1, top + 1);
+    lua_remove(L, top + 1);
+    return ret;
+}
+
+
 //hack for luac, 避免luac error破坏包裹c#函数的异常块(luajit采用的是类似c++异常)
 LUA_API int luavm_pushcfunction(lua_State* L, lua_CFunction fn)
 {

@@ -2,3 +2,5 @@
 /tolua-master/Logs
 /LuaLib/x64
 /LuaLib/.vs
+/LuaLib/build
+/build

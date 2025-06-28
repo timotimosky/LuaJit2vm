@@ -4,3 +4,10 @@
 /LuaLib/.vs
 /LuaLib/build
 /build
+LuavmUnityProject/.vsconfig
+/LuavmUnityProject/Library
+/LuavmUnityProject/Temp
+/LuavmUnityProject/UserSettings
+/LuavmUnityProject/Logs
+LuavmUnityProject/Assembly-CSharp.csproj
+LuavmUnityProject/Assembly-CSharp-Editor.csproj

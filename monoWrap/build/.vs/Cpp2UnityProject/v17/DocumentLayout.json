@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\github\\UnityBooks\\UnityCppPinvoke\\Cpp2Unity\\build\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AF1A9649-1EE7-39C2-9C77-0397D3B0E041}|Cpp2UnityLib.vcxproj|E:\\github\\UnityBooks\\UnityCppPinvoke\\Cpp2Unity\\scripts\\src\\ArrayTypeWrap.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ArrayTypeWrap.cpp",
+              "DocumentMoniker": "E:\\github\\UnityBooks\\UnityCppPinvoke\\Cpp2Unity\\scripts\\src\\ArrayTypeWrap.cpp",
+              "RelativeDocumentMoniker": "..\\scripts\\src\\ArrayTypeWrap.cpp",
+              "ToolTip": "E:\\github\\UnityBooks\\UnityCppPinvoke\\Cpp2Unity\\scripts\\src\\ArrayTypeWrap.cpp",
+              "RelativeToolTip": "..\\scripts\\src\\ArrayTypeWrap.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-06-03T14:37:57.955Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

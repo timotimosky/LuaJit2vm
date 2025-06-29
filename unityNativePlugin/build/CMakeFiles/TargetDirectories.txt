@@ -1,0 +1,6 @@
+F:/github/LuaJit2vm/unityNativePlugin/build/CMakeFiles/RHI.dir
+F:/github/LuaJit2vm/unityNativePlugin/build/CMakeFiles/AsyncGPUReadbackPlugin.dir
+F:/github/LuaJit2vm/unityNativePlugin/build/CMakeFiles/cpp_example_dll.dir
+F:/github/LuaJit2vm/unityNativePlugin/build/CMakeFiles/particles.dir
+F:/github/LuaJit2vm/unityNativePlugin/build/CMakeFiles/ALL_BUILD.dir
+F:/github/LuaJit2vm/unityNativePlugin/build/CMakeFiles/ZERO_CHECK.dir

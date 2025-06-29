@@ -1,0 +1,10 @@
+^F:\GITHUB\LUAJIT2VM\UNITYNATIVEPLUGIN\BUILD\CMAKEFILES\097F323DCA6F4E4CFE95E648644F99B7\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SF:/github/LuaJit2vm/unityNativePlugin -BF:/github/LuaJit2vm/unityNativePlugin/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file F:/github/LuaJit2vm/unityNativePlugin/build/BuildPinvoke.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

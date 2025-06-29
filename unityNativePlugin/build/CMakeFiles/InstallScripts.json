@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"F:/github/LuaJit2vm/unityNativePlugin/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

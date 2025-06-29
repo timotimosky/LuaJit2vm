@@ -1,0 +1,6 @@
+该工具一般位于C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\RegAsm.exe，其中v2.0.50727是我当前机器上的.NET Framework版本号。如果你安装了其他版本的.NET Framework，
+那么就应该位于对应版本号的目录里。
+
+可以从
+Visual Studio 200X Command Prompt
+命令行控制台运行

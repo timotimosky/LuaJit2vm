@@ -1,0 +1,1 @@
+dumpbin.exe是一个命令行工具，需要从Visual Studio 200X Command Prompt命令行控制台运行。

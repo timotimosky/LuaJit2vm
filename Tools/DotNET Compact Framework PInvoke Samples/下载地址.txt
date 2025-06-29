@@ -1,0 +1,3 @@
+.NET Compact Framework Sample: P/Invoke Library
+
+http://www.microsoft.com/downloads/details.aspx?FamilyId=B1F5CCAA-ADA2-42D4-8B70-95DC7D8F678C&displaylang=en

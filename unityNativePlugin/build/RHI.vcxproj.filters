@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\RenderAPI\RenderAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\RenderAPI\RenderAPI_D3D11.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\RenderAPI\RenderAPI_D3D12.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\RenderAPI\RenderAPI_D3D9.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\RenderAPI\RenderAPI_OpenGLCoreES.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\RenderAPI\RenderAPI_Vulkan.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\RenderAPI\RenderingPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\gl3w\gl3w.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\RenderAPI\PlatformBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\RenderAPI\RenderAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\RenderAPI\d3dx12.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityEventQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityGraphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityGraphicsD3D11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityGraphicsD3D12.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityGraphicsMetal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityGraphicsVulkan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityLog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityMemoryManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityProfiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityProfilerCallbacks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityRenderingExtensions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\Unity\IUnityShaderCompilerAccess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\gl3w\gl3w.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\rhi\gl3w\glcorearb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="F:\github\LuaJit2vm\unityNativePlugin\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{64140607-CF1A-3137-A20C-08B6C3EB1392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{70F82D68-E09F-3462-9D6F-BCCEDB3603D1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,4 @@
+A Win32 Library for .NET
+Provides a class library containing Win32 API function calls, constants, and structures.
+
+http://www.codeproject.com/KB/cs/win32.aspx

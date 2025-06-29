@@ -1,0 +1,6 @@
+一般位于：
+C:\Program Files\Microsoft SDKs\Windows\v6.0A\Bin\TlbImp.exe
+
+需要从
+Visual Studio 200X Command Prompt
+命令行控制台运行

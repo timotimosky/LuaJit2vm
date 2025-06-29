@@ -1,0 +1,4 @@
+Windows Message ID constants
+C# enumeration with most standard Windows message ID constants
+
+http://www.codeproject.com/KB/cs/cswindowsmessages.aspx

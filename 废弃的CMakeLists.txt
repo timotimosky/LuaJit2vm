@@ -1,0 +1,101 @@
+cmake_minimum_required(VERSION 3.10)
+project(MyCppProject CXX C)
+
+# Define the path to your source directory.
+# Since CMakeLists.txt is peer to src, it's just 'src'.
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+# --- Common Project Settings ---
+# Set the C++ standard to C++17 and ensure it's required.
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Enable position independent code, which is good practice for shared libraries (DLLs).
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+# Add common include directories. This makes sure that when one module
+# includes headers from another (e.g., particles includes openglEx headers),
+# CMake knows where to find them.
+include_directories(
+    "${SRC_DIR}/RHI"
+    "${SRC_DIR}/openglEx"
+    "${SRC_DIR}/RHI/gl3w"
+    "${SRC_DIR}/AsyncGPUReadbackPlugin"
+    "${SRC_DIR}/cpp_example_dll"
+    "${SRC_DIR}/particles"
+)
+
+# Set common compile options for warnings.
+# For MSVC (Visual Studio compiler), we use /W4 for high warnings and /WX to treat warnings as errors.
+if(MSVC)
+    add_compile_options(/W4 /WX)
+# For other compilers (like GCC/Clang), we use -Wall, -Wextra, and -Werror.
+else()
+    add_compile_options(-Wall -Wextra -Werror)
+endif()
+
+
+# --- Define Source Files for Each Component ---
+# It's best practice to explicitly list source files instead of using GLOB,
+# as GLOB won't detect new files automatically without re-running CMake.
+# Replace the comments with your actual .c or .cpp file names.
+
+# RHI Static Library Source Files
+set(RHI_SOURCES
+    "${SRC_DIR}/RHI/gl3w/*.h"
+	"${SRC_DIR}/RHI/gl3w/*.cpp"
+    "${SRC_DIR}/RHI/RenderAPI/*.h"
+    "${SRC_DIR}/RHI/RenderAPI/*.cpp"
+       "${SRC_DIR}/RHI/UnityInterface/*.h"
+        "${SRC_DIR}/RHI/UnityInterface/*.cpp"
+)
+
+# openglEx Static Library Source Files
+set(OPENGLEX_SOURCES
+    "${SRC_DIR}/openglEx/*.cpp" # <-- REPLACE with your actual openglEx source files
+    "${SRC_DIR}/openglEx/*.h" # <-- e.g., GLRenderer.cpp, GLUtils.c
+    # Add more openglEx source files here
+)
+
+# AsyncGPUReadbackPlugin DLL Source Files
+set(ASYNCGPUREADBACK_SOURCES
+    "${SRC_DIR}/AsyncGPUReadbackPlugin/*.h" # <-- REPLACE with your actual AsyncGPUReadbackPlugin source files
+    "${SRC_DIR}/AsyncGPUReadbackPlugin/*.cpp" # <-- e.g., AsyncReadback.cpp
+    # Add more AsyncGPUReadbackPlugin source files here
+)
+
+# cpp_example_dll DLL Source Files
+set(CPP_EXAMPLE_DLL_SOURCES
+    "${SRC_DIR}/cpp_example_dll/*.h" # <-- REPLACE with your actual cpp_example_dll source files
+    "${SRC_DIR}/cpp_example_dll/*.cpp" # <-- e.g., MyDllEntry.cpp
+    # Add more cpp_example_dll source files here
+)
+
+# particles DLL Source Files
+set(PARTICLES_SOURCES
+    "${SRC_DIR}/particles/*.h" # <-- REPLACE with your actual particles source files
+    "${SRC_DIR}/particles/*.cpp"       # <-- e.g., ParticleEngine.cpp, ParticleShader.cpp
+    # Add more particles source files here
+)
+
+# --- Build Targets ---
+
+# Build RHI as a static library.
+# A static library (.lib on Windows) is linked directly into other binaries.
+add_library(RHI STATIC ${RHI_SOURCES})
+
+# Build openglEx as a static library.
+add_library(openglEx STATIC ${OPENGLEX_SOURCES})
+
+# Build AsyncGPUReadbackPlugin as a shared library (DLL).
+add_library(AsyncGPUReadbackPlugin SHARED ${ASYNCGPUREADBACK_SOURCES})
+# AsyncGPUReadbackPlugin depends on RHI, so we link it.
+target_link_libraries(AsyncGPUReadbackPlugin PRIVATE RHI)
+
+# Build cpp_example_dll as a shared library (DLL).
+# It has no dependencies, so no target_link_libraries call is needed.
+add_library(cpp_example_dll SHARED ${CPP_EXAMPLE_DLL_SOURCES})
+
+# Build particles as a shared library (DLL).
+add_library(particles SHARED ${PARTICLES_SOURCES})
+# particles depends on openglEx, so we link it.
+target_link_libraries(particles PRIVATE openglEx)

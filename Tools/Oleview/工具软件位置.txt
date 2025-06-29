@@ -1,0 +1,5 @@
+该工具一般位于C:\Program Files\Microsoft Visual Studio 8\Common7\Tools\Bin目录下
+
+可以从
+Visual Studio 200X Command Prompt
+命令行控制台运行

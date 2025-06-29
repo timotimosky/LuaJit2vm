@@ -1,0 +1,35 @@
+1.当前有一个src文件夹。
+
+2.src文件夹下有5个文件夹：AsyncGPUReadbackPlugin、cpp_example_dll、particles、RHI、openglEx。内部有c或者cpp文件
+
+3.AsyncGPUReadbackPlugin依赖于RHI，需要编译为dll
+
+4.cpp_example_dll不依赖于任何文件，需要编译为dll
+
+5.particles依赖于openglEx，需要编译为dll
+
+
+MyProject/
+├── CMakeLists.txt              <-- 主 CMakeLists.txt 文件
+└── src/
+    ├── CMakeLists.txt          <-- src 文件夹内的 CMakeLists.txt
+    │
+    ├── AsyncGPUReadbackPlugin/
+    │   ├── CMakeLists.txt
+    │   └── your_plugin_source.cpp  (或者 .c 文件)
+    │
+    ├── cpp_example_dll/
+    │   ├── CMakeLists.txt
+    │   └── your_example_source.cpp
+    │
+    ├── particles/
+    │   ├── CMakeLists.txt
+    │   └── your_particles_source.cpp
+    │
+    ├── RHI/
+    │   ├── CMakeLists.txt
+    │   └── your_rhi_source.cpp
+    │
+    └── openglEx/
+        ├── CMakeLists.txt
+        └── your_opengl_source.cpp

@@ -11,3 +11,8 @@ LuavmUnityProject/.vsconfig
 /LuavmUnityProject/Logs
 LuavmUnityProject/Assembly-CSharp.csproj
 LuavmUnityProject/Assembly-CSharp-Editor.csproj
+/CppPinvokeUnityProject/Library
+/CppPinvokeUnityProject/Logs
+/CppPinvokeUnityProject/ProjectSettings
+/CppPinvokeUnityProject/obj
+/CppPinvokeUnityProject/.vs

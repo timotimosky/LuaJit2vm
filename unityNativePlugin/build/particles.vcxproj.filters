@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="F:\github\LuaJit2vm\unityNativePlugin\src\openglEx\renderer_opengl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\github\LuaJit2vm\unityNativePlugin\src\particles\unity_native_particles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\openglEx\glext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\openglEx\globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\openglEx\renderer_opengl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\github\LuaJit2vm\unityNativePlugin\src\openglEx\shader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="F:\github\LuaJit2vm\unityNativePlugin\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{64140607-CF1A-3137-A20C-08B6C3EB1392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{70F82D68-E09F-3462-9D6F-BCCEDB3603D1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="F:\github\LuaJit2vm\unityNativePlugin\build\CMakeFiles\097f323dca6f4e4cfe95e648644f99b7\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{F0EE4603-8380-3DFE-BB22-71239159E767}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

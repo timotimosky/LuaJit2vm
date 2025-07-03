@@ -16,3 +16,5 @@ LuavmUnityProject/Assembly-CSharp-Editor.csproj
 /CppPinvokeUnityProject/ProjectSettings
 /CppPinvokeUnityProject/obj
 /CppPinvokeUnityProject/.vs
+/unityNativePlugin/build
+/LuavmUnityProject/.vs

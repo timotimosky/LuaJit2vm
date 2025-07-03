@@ -3,13 +3,14 @@
 @echo off
 
 :: 设置你的 Visual Studio 版本和版次（例如：2022\Community, 2019\Professional 等）
-set "VS_VERSION_PATH=2022\Professional"
+set "VS_VERSION_PATH=2022\Community"
 
 :: 构建 VsDevCmd.bat 的完整路径
 :: 注意：ProgramFiles 通常是 C:\Program Files，ProgramFiles(x86) 是 C:\Program Files (x86)
 :: 大多数新版 VS 安装在 Program Files 下，旧版可能在 Program Files (x86)
 
 set BUILD_DIR="%ProgramFiles%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat"
+
 echo Current directory is: %BUILD_DIR%
 
 if exist %BUILD_DIR% (
@@ -18,7 +19,7 @@ if exist %BUILD_DIR% (
 ) else if exist "%ProgramFiles(x86)%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat" (
     set "VSCMD_PATH=%ProgramFiles(x86)%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat"
 ) else (
-    echo 错误：找不到 VsDevCmd.bat。请检查 VS_VERSION_PATH 设置。
+    echo Error:NoFind VsDevCmd.bat. Check VS_VERSION_PATH
     echo 示例路径：C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\Tools\VsDevCmd.bat
 
 )
@@ -33,15 +34,18 @@ call "%VSCMD_PATH%"
 
 :: 执行 dumpbin 命令
 echo.
-echo now do == dumpbin.exe /exports libnativeparticles.dll...
-
-
 set SCRIPT_DIR=%~dp0
-set BUILD_DIR=%SCRIPT_DIR%uProject\Assets\Plugins\x86_64
+echo now do == dumpbin.exe /exports luaCWrap.dll...
+set DLL_DIR=%SCRIPT_DIR%build\Debug
+echo "%DLL_DIR%"
+
+cd %DLL_DIR%
+
+set BUILD_DIR=%SCRIPT_DIR%unityNativePlugin\Assets\Plugins\x86_64
 echo BUILD_DIR is: "%BUILD_DIR%"
 cd  %BUILD_DIR%
 
-dumpbin.exe /exports libnativeparticles.dll
+dumpbin.exe /exports ./luaCWrap.dll
 echo.
 echo now do  over ==
 pause

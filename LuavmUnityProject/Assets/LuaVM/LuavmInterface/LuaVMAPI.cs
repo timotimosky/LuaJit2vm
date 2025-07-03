@@ -6,10 +6,11 @@ namespace LuaInterface
     // only for lapi.h
     public partial class LuaVMAPI
     {
-#if !UNITY_EDITOR && UNITY_IPHONE
-        const string LUADLL = "__Internal";
+        //UNITY_WEBGL也使用__Internal
+#if !UNITY_EDITOR && (UNITY_IPHONE || UNITY_WEBGL)
+        const string LUAVM_DLL_NAME = "__Internal";
 #else
-        const string LUAVM_DLL_NAME = "LuaLib";
+        const string LUAVM_DLL_NAME = "lua54";
 #endif
 
 
@@ -413,7 +414,7 @@ namespace LuaInterface
          ** Execute a protected call.
         */
 
-        [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("luaCWrap", CallingConvention = CallingConvention.Cdecl)]
         public static extern int luavm_pcall(IntPtr L, int nargs, int nresults, int ctx);
 
 

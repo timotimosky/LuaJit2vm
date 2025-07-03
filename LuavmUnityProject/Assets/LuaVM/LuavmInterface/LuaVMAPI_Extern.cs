@@ -21,7 +21,7 @@ namespace LuaInterface
 
 
         //  ≈‰∫Ø ˝
-        [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("luaCWrap", CallingConvention = CallingConvention.Cdecl)]
         public static extern int luavm_loadbuffer(IntPtr luaState, byte[] buff, int size, string name);
 
         [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]

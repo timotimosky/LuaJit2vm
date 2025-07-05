@@ -11,6 +11,7 @@ namespace LuaInterface
         const string LUAVM_DLL_NAME = "__Internal";
 #else
         const string LUAVM_DLL_NAME = "lua54";
+        const string LUAVM_WRAP_NAME = "luaCWrap";
 #endif
 
 

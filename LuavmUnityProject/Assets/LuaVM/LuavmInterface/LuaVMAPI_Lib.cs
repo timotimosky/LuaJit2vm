@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 namespace LuaInterface
 {
     //for Lauxlib.h
@@ -18,6 +19,19 @@ namespace LuaInterface
         /* open all previous libraries */
         [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern void luaL_openlibs(IntPtr L);
+
+
+        OpenlibDelegate Init;
+        public delegate void OpenlibDelegate(IntPtr L);
+
+        //动态加载函数
+        public static void luaL_openlibs_new(IntPtr L)
+        {
+            IntPtr libarayHandle = DllLoader.LoadDll(LUAVM_DLL_NAME);
+            OpenlibDelegate Init = DllLoader.GetDelegate<OpenlibDelegate>(libarayHandle, "luaL_openlibs");
+            Init(L);
+        }
+
 
 
         [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]

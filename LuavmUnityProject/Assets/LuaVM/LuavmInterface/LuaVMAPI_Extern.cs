@@ -16,7 +16,7 @@ namespace LuaInterface
         public static extern int dostring(IntPtr L, string s);
 
 
-        [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LUAVM_WRAP_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr luavm_tolstring(IntPtr L, int index, out int len);
 
 

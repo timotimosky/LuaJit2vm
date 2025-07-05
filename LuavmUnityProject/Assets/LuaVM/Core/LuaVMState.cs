@@ -15,7 +15,7 @@ public class LuaVMState
         //1新建虚拟机  
         L = LuaVMAPI.luaL_newstate();
         //2载入库  
-        LuaVMAPI.luaL_openlibs_new(L);
+        LuaVMAPI.luaL_openlibs(L);
 
         //跟tolua一样注册一个debug函数，将lua的debug信息输出到Unity
         LuaVMAPI.pushcfunction(L, ToLua.Print);

@@ -16,12 +16,15 @@ LuaLib文件夹下是我们的lua工程。
 
 1.双击 1.cmakeDo.cmd，即可生成Build文件夹。文件夹内双击BuildPinvoke.sln即可打开VS工程。
 
-2.双击2.GeacreateDLL.cmd，即可不打开VS工程的情况下自动编译出DLL
+2.双击2.GeacreateDLL.cmd，即可不打开VS工程的情况下自动编译出DLL。DLL会自动放在Unity的插件目录下，无需再手动copy。
 
 3.双击3.GetDllFunction.cmd，可以观察DLL导出的函数是否正确。
 
 # Unity工程介绍
 
+LuavmUnityProject 是Unity工程。
+
+## lua相关
 Assets\LuaVM 文件夹下 是luavm的c#代码
 
 1.Assets\LuaVM\LuavmInterface 是对luavm的封装
@@ -39,3 +42,12 @@ Assets\LuaVM 文件夹下 是luavm的c#代码
 2.UNITY_WEBGL的[DllImport] 参数为_internal
 
 3.源码直接放到插件目录的webgl目录下。
+
+
+## PInvoke教程
+PInvokeTutorial文件夹下演示PInvoke基础。
+## 动态加载DLL
+NativeDLLManager文件夹实现动态加载和卸载DLL的功能。
+我们使用宏来控制是否动态加载DLL，并保持外部函数名一致。
+比如lua的库加载，我们可以通过UseDynamicDLL这个宏来切换模式，而不影响外部逻辑。
+![动态加载演示](./images/1.png "lua的动态加载演示")

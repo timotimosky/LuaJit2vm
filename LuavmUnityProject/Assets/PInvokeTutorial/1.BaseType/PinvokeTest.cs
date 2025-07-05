@@ -3,13 +3,80 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MarshalStruct_StructInStruct;
+
+#if UNITY_EDITOR
+[UnityEditor.CustomEditor(typeof(PinvokeTest))]
+class TestScriptEditor : UnityEditor.Editor
+{
+    public override void OnInspectorGUI()
+    {
+        var ts = target as PinvokeTest;
+
+        if (GUILayout.Button("Call Auto API"))
+            ts.CallAutoAPI();
+        if (GUILayout.Button("Call PInvoke (requires editor reboot to update NativePlugin"))
+            ts.CallPInvokeAPI();
+    }
+}
+#endif
+
+
 public class PinvokeTest : MonoBehaviour
 {
+
+    public void CallAutoAPI()
+    {
+        Debug.Log("Calling Auto API");
+
+        var val = Struct_Pinvoke.simple_func();
+        Debug.Log(string.Format("simple_func: {0}", val));
+
+        var sum = Struct_Pinvoke.sum(2.3f, 1.2f);
+        Debug.Log(string.Format("sum: {0}", sum));
+
+        string some_string = "HelloWorld!";
+        var len = Struct_Pinvoke.string_length(some_string);
+        Debug.Log(string.Format("Length of [{0}] is {1}", some_string, len));
+
+        int[] _intlist = new int[32];
+        _intlist[0] = 1;
+        var ss = new ANativeStruct(123, 45.67f, _intlist,  "hello");
+        var result = Struct_Pinvoke.send_struct(ref ss);
+        Debug.Log(string.Format("SendStruct result [{0}]", result));
+
+        ss = Struct_Pinvoke.recv_struct();
+        result = Struct_Pinvoke.send_struct(ref ss);
+        Debug.Log(string.Format("RecvStruct result [{0}]", result));
+    }
+
+    public void CallPInvokeAPI()
+    {
+        var val = Struct_Pinvoke.simple_func();
+        Debug.Log(string.Format("simple_func: {0}", val));
+
+        var sum = Struct_Pinvoke.sum(2.3f, 1.2f);
+        Debug.Log(string.Format("sum: {0}", sum));
+
+        string some_string = "HelloWorld!";
+        var len = Struct_Pinvoke.string_length(some_string);
+        Debug.Log(string.Format("Length of [{0}] is {1}", some_string, len));
+
+        int[] _intlist = new int[32];
+        _intlist[0] = 1;
+        var ss = new ANativeStruct(123, 45.67f, _intlist, "hello");
+
+
+        var result = Struct_Pinvoke.send_struct(ref ss);
+        Debug.Log(string.Format("SendStruct result [{0}]", result));
+
+        ss = Struct_Pinvoke.recv_struct();
+        Debug.Log(string.Format("RecvStruct result [{0}]", ss));
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        CallAutoAPI();
         //DLLManager.LoadDLL_Win32();
         BaseType_Pinvoke.TestBaseType();
        // Struct_Pinvoke.Test();

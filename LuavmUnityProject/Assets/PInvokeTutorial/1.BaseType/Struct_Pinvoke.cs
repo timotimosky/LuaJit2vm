@@ -1,32 +1,104 @@
+using fts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
+//typedef struct ANativeStruct
+//{
+//    int employeeID;
+//    float employedYear;
+//    int intList[255]; 
+//    char displayName[255]; 
+//} ANativeStruct, *PtrANativeStruct;
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+public struct ANativeStruct
+{
+    public int intValue;
+    public float floatValue;
+   // public bool c;
+
+    //单独声明内存布局
+    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
+    public int[] intList;
+
+    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 255)]
+    public string DisplayName;
+
+    public ANativeStruct(int _intValue, float _floatValue, int[] _intlist, string _DisplayName)
+    {
+        intValue = _intValue;
+        floatValue = _floatValue;
+        intList = _intlist;
+        DisplayName = _DisplayName;
+    }
+};
+
+
+#if UseDynamicDLL
+[NativeDLL(DllLoader._dllName)]
+#endif
 public class Struct_Pinvoke 
 {
-    //typedef struct ANativeStruct
-    //{
-    //    int employeeID;
-    //    float employedYear;
-    //    int intList[255]; 
-    //    char displayName[255]; 
-    //} ANativeStruct, *PtrANativeStruct;
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
 
-    public struct ANativeStruct
+    // ------------------------------------------------------------------------
+    // Example C API defined in my_cool_plugin.h
+    // ------------------------------------------------------------------------
+    /*
+    extern "C" 
     {
-        public  int intValue;
-        public float floatValue;
+        __declspec(dllexport) int simple_func();
+        __declspec(dllexport) float sum(float a, float b);
+        __declspec(dllexport) int string_length(const char* s);
 
-        //单独声明内存布局
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
-        public int[] intList;
+        struct SimpleStruct {
+            int a;
+            float b;
+            bool c;
+        };
+        __declspec(dllexport) double send_struct(SimpleStruct const* ss);
+        __declspec(dllexport) SimpleStruct recv_struct();
+    }
+    */
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 255)]
-        public string DisplayName;
-    };
+#if UseDynamicDLL
+    [NativeDLLFunction]
+    public static SimpleFunc simple_func;
+    public delegate int SimpleFunc();
+
+    [NativeDLLFunction]
+    public static Sum sum = null;
+    public delegate float Sum(float a, float b);
+
+    [NativeDLLFunction]
+    public static StringLength string_length = null;
+    public delegate int StringLength([MarshalAs(UnmanagedType.LPStr)] string s);
+
+    [NativeDLLFunction]
+    public static SendStruct send_struct = null;
+    public delegate double SendStruct(ref ANativeStruct ss);
+
+    [NativeDLLFunction]
+    public static RecvStruct recv_struct = null;
+    public delegate ANativeStruct RecvStruct();
+
+#else
+    [DllImport(DllLoader._dllName, EntryPoint = "simple_func")]
+    extern static public int simple_func();
+
+    [DllImport(DllLoader._dllName, EntryPoint = "sum")]
+    extern static public float sum(float a, float b);
+
+    [DllImport(DllLoader._dllName, EntryPoint = "string_length")]
+    extern static public int string_length([MarshalAs(UnmanagedType.LPStr)] string s);
+
+    [DllImport(DllLoader._dllName, EntryPoint = "send_struct")]
+    extern static public double send_struct(ref ANativeStruct ss);
+
+    [DllImport(DllLoader._dllName, EntryPoint = "recv_struct")]
+    extern static public ANativeStruct recv_struct();
+
 
     [DllImport(DllLoader._dllName)]
     private static extern void SetStruct(IntPtr stu, int count);
@@ -44,6 +116,7 @@ public class Struct_Pinvoke
 
     [DllImport(DllLoader._dllName, CallingConvention = CallingConvention.Cdecl)]
     private extern static void TestReturnStructFromArg(ref IntPtr pStruct);
+#endif
 
 
     private static void TestAllocString()

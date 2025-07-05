@@ -38,13 +38,13 @@ public class DllManager : MonoBehaviour
     static void SetDelegate(Type type)
     {
         // Get custom attributes for type
-        var typeAttributes = type.GetCustomAttributes(typeof(PluginAttr), true);
+        var typeAttributes = type.GetCustomAttributes(typeof(NativeDLLAttribute), true);
         if (typeAttributes.Length == 0)
         {
             return;
         }
 
-        var typeAttribute = typeAttributes[0] as PluginAttr;
+        var typeAttribute = typeAttributes[0] as NativeDLLAttribute;
 
         var dllName = typeAttribute.pluginName;
 
@@ -58,24 +58,21 @@ public class DllManager : MonoBehaviour
         FieldInfo[] fields = type.GetFields(BindingFlags.Static | BindingFlags.Public);
         foreach (var field in fields)
         {
-            var fieldAttributes1 = field.GetCustomAttributes(typeof(PluginFunctionAttr), true);
+            var fieldAttributes1 = field.GetCustomAttributes(typeof(NativeDLLFunctionAttribute), true);
             Debug.Log("在当前类查询到的方法数量="+fieldAttributes1.Length);
+            if (fieldAttributes1.Length == 0)
+                continue;
 
-            var fieldAttributes = field.GetCustomAttributes<PluginFunctionAttr>(true);
+            // Get function pointer
+            var fnPtr = DllLoader.GetFuncPtrCrossPlatform(dllHandle, field.Name);
+            if (fnPtr == IntPtr.Zero)
+                continue;
 
-            foreach (var fieldAttribute in fieldAttributes)
-            {
-                // Get function pointer
-                var fnPtr = DllLoader.GetFuncPtrCrossPlatform(dllHandle, fieldAttribute.functionName);
-                if (fnPtr == IntPtr.Zero)
-                    continue;
+            // Get delegate pointer
+            Delegate fnDelegate = Marshal.GetDelegateForFunctionPointer(fnPtr, field.FieldType);
 
-                // Get delegate pointer
-                Delegate fnDelegate = Marshal.GetDelegateForFunctionPointer(fnPtr, field.FieldType);
-
-                // Set static field value
-                field.SetValue(null, fnDelegate);
-            }
+            // Set static field value
+            field.SetValue(null, fnDelegate);
         }
     }
 

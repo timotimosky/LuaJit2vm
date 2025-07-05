@@ -66,31 +66,20 @@ namespace fts
     // Attribute for Plugin APIs
     // ------------------------------------------------------------------------
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-    public class PluginAttr : System.Attribute
+    public class NativeDLLAttribute : System.Attribute
     {
         // Fields
         public string pluginName { get; private set; }
 
         // Methods
-        public PluginAttr(string pluginName) {
+        public NativeDLLAttribute(string pluginName) {
             this.pluginName = pluginName;
         }
     }
 
-
-    // ------------------------------------------------------------------------
-    // Attribute for functions inside a Plugin API
-    // ------------------------------------------------------------------------
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
-    public class PluginFunctionAttr : System.Attribute
+    public class NativeDLLFunctionAttribute : System.Attribute
     {
-        // Fields
-        public string functionName { get; private set; }
-
-        // Methods
-        public PluginFunctionAttr(string functionName) {
-            this.functionName = functionName;
-        }
     }
 
 } 

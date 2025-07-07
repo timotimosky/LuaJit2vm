@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <Platforms>AnyCPU</Platforms>
+    <LangVersion>10.0</LangVersion>
+    <RootNamespace>Python.Runtime</RootNamespace>
+    <AssemblyName>Python.Runtime</AssemblyName>
+    <Nullable>enable</Nullable>
+
+    <PackageId>pythonnet</PackageId>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/pythonnet/pythonnet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>python interop dynamic dlr Mono pinvoke</PackageTags>
+    <PackageIcon>python-clear.png</PackageIcon>
+    <PackageIconUrl>https://raw.githubusercontent.com/pythonnet/pythonnet/master/src/console/python-clear.ico</PackageIconUrl>
+    <PackageProjectUrl>https://pythonnet.github.io/</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <Description>Python and CLR (.NET and Mono) cross-platform language interop</Description>
+
+    <DebugSymbols>true</DebugSymbols>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+
+    <AssemblyOriginatorKeyFile>..\pythonnet.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+
+    <NoWarn>1591;NU1701</NoWarn>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+
+    <IsPackable>true</IsPackable>
+
+    <Configurations>Debug;Release;TraceAlloc</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'TraceAlloc'">
+    <DefineConstants>$(DefineConstants);TRACE_ALLOC</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputPath>..\..\pythonnet\runtime</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <None Include="..\..\src\console\python-clear.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\clr.py">
+      <LogicalName>clr.py</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\interop.py">
+      <LogicalName>interop.py</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mixins\*.py" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lost.Compat.NullabilityAttributes" Version="0.0.4" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+  </ItemGroup>
+</Project>

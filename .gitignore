@@ -19,3 +19,6 @@ LuavmUnityProject/Assembly-CSharp-Editor.csproj
 /unityNativePlugin/build
 /LuavmUnityProject/.vs
 /LuavmUnityProject/Library
+/PythonUnityProject/Library
+/PythonUnityProject/Logs
+/PythonUnityProject/UserSettings

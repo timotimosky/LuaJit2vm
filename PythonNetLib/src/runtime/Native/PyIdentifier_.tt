@@ -1,0 +1,62 @@
+<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#
+    string[] internNames = new string[]
+    {
+        "__name__",
+        "__dict__",
+        "__doc__",
+        "__class__",
+        "__clear_reentry_guard__",
+        "__module__",
+        "__file__",
+        "__slots__",
+        "__self__",
+        "__annotations__",
+
+        "__init__",
+        "__repr__",
+        "__import__",
+        "__builtins__",
+
+        "builtins",
+
+        "__overloads__",
+        "Overloads",
+    };
+#>
+using System;
+
+namespace Python.Runtime
+{
+    static class PyIdentifier
+    {
+#pragma warning disable CS0649 // indentifier is never assigned to (assigned with reflection)
+<#
+    foreach (var name in internNames)
+    {
+#>
+         static IntPtr f<#= name #>;
+         public static BorrowedReference <#= name #> => new(f<#= name #>);
+<#
+    }
+#>
+#pragma warning restore CS0649        // indentifier is never assigned to (assigned with reflection)
+    }
+
+
+    static partial class InternString
+    {
+        private static readonly string[] _builtinNames = new string[]
+        {
+<#
+    foreach (var name in internNames)
+    {
+#>
+            "<#= name #>",
+<#
+    }
+#>
+        };
+    }
+}

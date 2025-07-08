@@ -22,3 +22,6 @@ LuavmUnityProject/Assembly-CSharp-Editor.csproj
 /PythonUnityProject/Library
 /PythonUnityProject/Logs
 /PythonUnityProject/UserSettings
+/monoWrap/build
+/LuavmUnityProject/obj
+/LuavmUnityProject/obj

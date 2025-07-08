@@ -57,11 +57,19 @@ namespace LuaInterface
     public delegate void LuaHookFunc(IntPtr L, ref Lua_Debug ar);    
 #endif
 
-        public static void pushcfunction(IntPtr luaState, LuaCSFunction func)
+        //public static void pushcfunction(IntPtr luaState, LuaCSFunction func)
+        //{
+        //    IntPtr fn = Marshal.GetFunctionPointerForDelegate(func);
+        //    luavm_pushcfunction(luaState, fn);
+        //}
+
+        [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void lua_pushcclosure(IntPtr L, LuaCSFunction f, int n);
+        public static void lua_pushcfunction(IntPtr L, LuaCSFunction f)
         {
-            IntPtr fn = Marshal.GetFunctionPointerForDelegate(func);
-            luavm_pushcfunction(luaState, fn);
+            lua_pushcclosure(L, f, 0);
         }
+
 
 
         //真正给外部调用的

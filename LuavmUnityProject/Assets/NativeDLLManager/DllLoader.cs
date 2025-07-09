@@ -137,6 +137,7 @@ public static class DllLoader
             return;
 
         FreeLibrary(hLib);
+        hLib = IntPtr.Zero;
     }
 
 

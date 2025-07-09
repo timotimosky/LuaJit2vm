@@ -63,6 +63,10 @@ namespace LuaInterface
         //    luavm_pushcfunction(luaState, fn);
         //}
 
+        [DllImport(LUAVM_WRAP_NAME, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int luavm_setfield(IntPtr L, int idx, string key);
+
+
         [DllImport(LUAVM_DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern void lua_pushcclosure(IntPtr L, LuaCSFunction f, int n);
         public static void lua_pushcfunction(IntPtr L, LuaCSFunction f)
@@ -71,6 +75,19 @@ namespace LuaInterface
         }
 
 
+        public static void luavm_setglobal(IntPtr luaState, string name)
+        {
+            setfield(luaState, LuaIndexes.LUA_GLOBALSINDEX, name);
+        }
+
+        public static void setfield(IntPtr L, int idx, string key)
+        {
+            if (LuaVMAPI.luavm_setfield(L, idx, key) != 0)
+            {
+                string error = lua_tostring(L, -1);
+                throw new LuaException(error);
+            }
+        }
 
         //真正给外部调用的
         public static bool luaVM_dostring(IntPtr luaState, string chunk)

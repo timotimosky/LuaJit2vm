@@ -1,5 +1,6 @@
 using AOT;
 using LuaInterface;
+using NUnit.Framework.Interfaces;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -15,16 +16,32 @@ public class LuaCallUnity : MonoBehaviour
         Debug.Log(log);
     }
 
-    public static void OpenLibs(IntPtr L)
+    void Start()
     {
-        L = LuaVMAPI.luaL_newstate();
+        OpenLibs();
+    }
+
+    public static void OpenLibs()
+    {
+        IntPtr  L = LuaVMAPI.luaL_newstate();
         LuaVMAPI.luaL_openlibs(L);
         //......
         //IntPtr fn = Marshal.GetFunctionPointerForDelegate(Print);
         LuaVMAPI.lua_pushcfunction(L, Print);
-       // LuaDLL.tolua_pushcfunction(L, Print);
-        LuaDLL.lua_setglobal(L, "print");
+        // LuaDLL.tolua_pushcfunction(L, Print);
+
+        //将栈顶元素赋值给name变量。(name参数的值，是lua脚本中全部变量的名字。)
+        //也就是以后 lua代码中的"print"，对应着c#中的Print函数的指针
+        LuaVMAPI.luavm_setglobal(L, "print");
+       // LuaDLL.lua_setglobal
+      //  LuaVMAPI.lua_setglobal(L, "print");
         //......
+
+        string luafile =
+         @"  
+            print(""Hello, World!"")  -- 输出: Hello, World!
+        ";
+        LuaVMAPI.DoString(L, luafile);
     }
 
     [AOT.MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -38,6 +55,7 @@ public class LuaCallUnity : MonoBehaviour
             {
                 CString sb = CString.Alloc(256);
 #if UNITY_EDITOR
+                //获得当前运行的函数的上一个调用层的信息，返回行数，把调用层的名称入栈
                 int line = LuaDLL.tolua_where(L, 1);
                 string filename = LuaDLL.lua_tostring(L, -1);
                 LuaDLL.lua_settop(L, n);
@@ -94,57 +112,6 @@ public class LuaCallUnity : MonoBehaviour
         }
     }
 
-
-    [AOT.MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-    private static int Print2(IntPtr L)
-    {
-        try
-        {
-            int n = LuaDLL.lua_gettop(L);
-            var sb = new StringBuilder();
-            //获得当前运行的函数的上一个调用层的信息，返回行数，把调用层的名称入栈
-            int line = LuaDLL.jlua_where(L, 1);
-            string filename = LuaDLL.lua_tostring(L, -1);
-            LuaDLL.lua_settop(L, n);
-            int offset = filename[0] == '@' ? 1 : 0;
-            sb.Append('[').Append(filename, offset, filename.Length - offset).Append(':').Append(line).Append("]:");
-
-            for (int i = 1; i <= n; i++)
-            {
-                if (i > 1) sb.Append("    ");
-                if (LuaDLL.lua_isstring(L, i) == 1)
-                {
-                    sb.Append(LuaDLL.lua_tostring(L, i));
-                }
-                else if (LuaDLL.lua_isnil(L, i))
-                {
-                    sb.Append("nil");
-                }
-                else if (LuaDLL.lua_isboolean(L, i))
-                {
-                    sb.Append(LuaDLL.jlua_toboolean(L, i) ? "true" : "false");
-                }
-                else
-                {
-                    IntPtr p = LuaDLL.lua_topointer(L, i);
-                    if (p == IntPtr.Zero)
-                    {
-                        sb.Append("nil");
-                    }
-                    else
-                    {
-                        sb.Append(LuaDLL.luaL_typename(L, i)).Append(":0x").Append(p.ToString("X"));
-                    }
-                }
-            }
-            Debug.Log(sb.ToString());
-            return 0;
-        }
-        catch (Exception e)
-        {
-            throw e;
-        }
-    }
 
 
     [DllImport("__Internal")]

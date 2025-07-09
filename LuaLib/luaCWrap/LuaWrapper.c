@@ -71,6 +71,26 @@ LUA_API int luavm_pushcfunction(lua_State* L, lua_CFunction fn)
     lua_pushcclosure(L, tolua_closure, 2);
     return 0;
 }
+static int _lua_setfield(lua_State* L)
+{
+    const char* name = lua_tostring(L, 2);
+    lua_setfield(L, 1, name);
+    return 0;
+}
+
+
+LUA_API int luavm_setfield(lua_State* L, int idx, const char* key)
+{
+    int top = lua_gettop(L);
+    idx = abs_index(L, idx);
+    lua_pushcfunction(L, _lua_setfield);
+    lua_pushvalue(L, idx);
+    lua_pushstring(L, key);
+    lua_pushvalue(L, top);
+    lua_remove(L, top);
+    return lua_pcall(L, 3, -1, 0);
+}
+
 
 
 

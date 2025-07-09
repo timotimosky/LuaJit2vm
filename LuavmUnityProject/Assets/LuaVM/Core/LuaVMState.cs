@@ -18,7 +18,7 @@ public class LuaVMState
         LuaVMAPI.luaL_openlibs(L);
 
         //跟tolua一样注册一个debug函数，将lua的debug信息输出到Unity
-        LuaVMAPI.pushcfunction(L, ToLua.Print);
+        LuaVMAPI.lua_pushcfunction(L, ToLua.Print);
     }
 
 

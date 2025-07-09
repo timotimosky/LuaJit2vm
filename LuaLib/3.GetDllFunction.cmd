@@ -18,11 +18,42 @@ if exist %BUILD_DIR% (
     set "VSCMD_PATH=%ProgramFiles%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat"
 ) else if exist "%ProgramFiles(x86)%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat" (
     set "VSCMD_PATH=%ProgramFiles(x86)%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat"
-) else (
-    echo Error:NoFind VsDevCmd.bat. Check VS_VERSION_PATH
-    echo 示例路径：C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\Tools\VsDevCmd.bat
+) 
 
+else (
+    set "VS_VERSION_PATH=2022\Enterprise"
+    set BUILD_DIR="%ProgramFiles%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat"
+    echo Current directory is: %BUILD_DIR%
+    if exist %BUILD_DIR% (
+    echo set =======================path
+    set "VSCMD_PATH=%ProgramFiles%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat"
+    ) else if exist "%ProgramFiles(x86)%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat" (
+        set "VSCMD_PATH=%ProgramFiles(x86)%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat"
+    ) else (
+        else (
+
+            set "VS_VERSION_PATH=2022\Professional"
+            set BUILD_DIR="%ProgramFiles%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat"
+            echo Current directory is: %BUILD_DIR%
+                set "VS_VERSION_PATH=2022\Enterprise"
+                set BUILD_DIR="%ProgramFiles%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat"
+                echo Current directory is: %BUILD_DIR%
+                if exist %BUILD_DIR% (
+                echo set =======================path
+                set "VSCMD_PATH=%ProgramFiles%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat"
+                ) else if exist "%ProgramFiles(x86)%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat" (
+                    set "VSCMD_PATH=%ProgramFiles(x86)%\Microsoft Visual Studio\%VS_VERSION_PATH%\Common7\Tools\VsDevCmd.bat"
+                ) else (
+                    echo Error:NoFind VsDevCmd.bat. Check VS_VERSION_PATH
+                    echo 示例路径：C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\Tools\VsDevCmd.bat
+                )
 )
+    )
+)
+
+
+
+
 
 :: 启动 VsDevCmd.bat 并在此会话中设置环境变量
 call "%VSCMD_PATH%"
